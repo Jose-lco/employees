@@ -9,6 +9,18 @@ function Form() {
   useEffect(() => {
     API.search().then(res => setEmployees({...employees, list: res.data.results}))
   }, [])
+  function compare(key){
+    return (a, b) => {
+      if (a[key] < b[key]) return -1;
+      if (a[key] > b[key]) return 1;
+      return 0;
+    };
+  }
+  function sort(key){
+    let employeesCopy = [...employees.list];
+    employeesCopy.sort(compare(key))
+    setEmployees({...employees, list: employeesCopy})
+  };
   return (
     <div>
       <div className="row">
@@ -24,7 +36,6 @@ function Form() {
                 const { value } = e.target
                 setEmployees({...employees, term: value})
                 const filteredArray = employees.list.filter(({ name }) => name.first.toLowerCase().includes(value.toLowerCase()) || name.last.toLowerCase().includes(value.toLowerCase()))
-                console.log(filteredArray);
                 setEmployees({...employees, list: filteredArray});
               }}
             />
@@ -32,10 +43,11 @@ function Form() {
         </form>
       </div>
       <div className="row">
-        <Table employees={employees} />
+        <Table employees={employees} sort={sort}/>
       </div>
     </div>
   )
 }
+
 
 export default Form

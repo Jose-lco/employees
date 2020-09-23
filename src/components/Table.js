@@ -1,13 +1,14 @@
 import React from "react";
 
-function Table({employees}) {
+function Table({employees, sort}) {
   
   return (
     <table className="table">
       <thead className="thead-dark">
         <tr>
-          <th scope="col">Image</th>
-          <th scope="col">First Name</th>
+          <th scope="col" >Image</th>
+        
+          <th scope="col" onClick={() => {sort(employees.list.name.first)}}>First Name</th>
           <th scope="col">Last Name</th>
           <th scope="col">Email</th>
           <th scope="col">Phone</th>
